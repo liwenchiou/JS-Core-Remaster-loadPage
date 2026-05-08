@@ -419,16 +419,19 @@ body {
     }
 
     .dialogue-box {
-        width: auto;
-        margin: 0 20px;
-        padding: 30px 20px 35px;
-        min-height: 200px;
+        width: 90vw !important;
+        margin: 0 auto;
+        padding: 25px 20px 35px;
+        min-height: 180px;
+        left: 50% !important;
+        transform: translateX(-50%) translateY(0) !important;
     }
 
     .speaker-name {
-        left: 20px;
-        font-size: 0.95rem;
-        padding: 3px 18px;
+        left: 15px;
+        font-size: 0.9rem;
+        padding: 3px 15px;
+        top: -15px;
     }
 
     .dialogue-text {
