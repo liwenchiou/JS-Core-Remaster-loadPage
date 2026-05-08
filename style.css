@@ -419,8 +419,8 @@ body {
     }
 
     .dialogue-box {
-        width: 95%;
-        padding: 30px 25px 35px;
+        width: calc(100% - 40px);
+        padding: 30px 20px 35px;
         min-height: 200px;
     }
 
