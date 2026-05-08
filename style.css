@@ -419,7 +419,8 @@ body {
     }
 
     .dialogue-box {
-        width: calc(100% - 40px);
+        width: auto;
+        margin: 0 20px;
         padding: 30px 20px 35px;
         min-height: 200px;
     }
@@ -433,6 +434,7 @@ body {
     .dialogue-text {
         font-size: 1.15rem;
         line-height: 1.6;
+        word-break: break-word;
     }
 
     .gate-content {
