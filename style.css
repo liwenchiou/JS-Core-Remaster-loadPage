@@ -405,3 +405,62 @@ body {
     pointer-events: none;
     z-index: 5;
 }
+
+/* Responsive Web Design (RWD) */
+@media (max-width: 768px) {
+    #app {
+        padding-bottom: 80px;
+    }
+
+    .character-container {
+        width: 90vw;
+        height: 90vw;
+        bottom: 220px;
+    }
+
+    .dialogue-box {
+        width: 95%;
+        padding: 30px 25px 35px;
+        min-height: 200px;
+    }
+
+    .speaker-name {
+        left: 20px;
+        font-size: 0.95rem;
+        padding: 3px 18px;
+    }
+
+    .dialogue-text {
+        font-size: 1.15rem;
+        line-height: 1.6;
+    }
+
+    .gate-content {
+        padding: 20px 30px;
+        width: 80%;
+    }
+
+    .guild-emblem {
+        font-size: 2.5rem;
+    }
+
+    .gate-text {
+        font-size: 1.1rem;
+        letter-spacing: 2px;
+    }
+
+    .action-btn {
+        padding: 12px 30px;
+        font-size: 1.1rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .character-container {
+        bottom: 240px;
+    }
+    
+    .dialogue-text {
+        font-size: 1.05rem;
+    }
+}
