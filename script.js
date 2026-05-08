@@ -1,7 +1,18 @@
 const dialogueData = [
     {
+        text: "這就是... 冒險者公會嗎？",
+        action: () => {
+            // Mentor stays hidden via CSS base state
+            const mentor = document.getElementById('mentor-sprite');
+            mentor.classList.remove('active', 'flying');
+            mentor.style.opacity = ''; // Clear any previous inline overrides
+        }
+    },
+    {
         text: "年輕的冒險者，歡迎來到<b>『JS 核心重構公會』</b>。我是導師 Antigravity。",
-        action: () => {}
+        action: () => {
+            triggerMentorEntry();
+        }
     },
     {
         text: "這場 30 天的冒險，分成了五個嚴密的里程碑，從整潔術、資料流到瀏覽器機制，我們將一步步揭開底層真相。",
@@ -39,11 +50,16 @@ const dialogueData = [
 
 let currentStep = 0;
 let isTyping = false;
+let hasStarted = false;
+
 const textTarget = document.getElementById('text-target');
 const trigger = document.getElementById('dialogue-trigger');
 const prevBtn = document.getElementById('prev-btn');
 const endControls = document.getElementById('end-controls');
 const restartBtn = document.getElementById('restart-btn');
+const gate = document.getElementById('entry-gate');
+const mentor = document.getElementById('mentor-sprite');
+const app = document.getElementById('app');
 
 function typeWriter(text, i = 0) {
     if (i === 0) {
@@ -76,14 +92,12 @@ function typeWriter(text, i = 0) {
 }
 
 function updateUI() {
-    // Show/Hide Prev Button
     if (currentStep > 1) {
         prevBtn.classList.add('visible');
     } else {
         prevBtn.classList.remove('visible');
     }
 
-    // Show End Controls
     if (currentStep >= dialogueData.length && !isTyping) {
         endControls.classList.add('visible');
         trigger.style.pointerEvents = 'none';
@@ -96,12 +110,12 @@ function updateUI() {
 }
 
 function nextDialogue() {
-    if (isTyping) return;
+    if (isTyping || !hasStarted) return;
 
     if (currentStep < dialogueData.length) {
         const step = dialogueData[currentStep];
+        step.action(); 
         typeWriter(step.text);
-        step.action();
         currentStep++;
     } else {
         updateUI();
@@ -110,17 +124,74 @@ function nextDialogue() {
 
 function prevDialogue() {
     if (isTyping || currentStep <= 1) return;
-    
-    currentStep -= 2; // Go back two steps because currentStep was incremented at the end of nextDialogue
+    currentStep -= 2;
     nextDialogue();
 }
 
-function restartDialogue() {
+function restartAdventure() {
     currentStep = 0;
-    nextDialogue();
+    hasStarted = false;
+    
+    endControls.classList.remove('visible');
+    trigger.classList.remove('visible');
+    
+    // Reset Mentor
+    mentor.style.transition = 'none';
+    mentor.classList.remove('active', 'flying');
+    mentor.style.opacity = ''; // Important: Clear inline opacity
+    void mentor.offsetWidth; 
+    
+    // Reset App Zoom
+    app.classList.remove('zoomed');
+    
+    // Reset Gate
+    gate.classList.remove('hidden', 'open');
+}
+
+// Mentor Entry Logic
+function triggerMentorEntry() {
+    mentor.style.transition = ''; 
+    mentor.style.opacity = ''; // Ensure no inline override
+    mentor.classList.remove('active', 'flying');
+    void mentor.offsetWidth; 
+    
+    requestAnimationFrame(() => {
+        requestAnimationFrame(() => {
+            mentor.classList.add('flying');
+            
+            setTimeout(() => {
+                mentor.classList.remove('flying');
+                mentor.classList.add('active');
+            }, 1800); 
+        });
+    });
+}
+
+// Gate Logic
+function openGate() {
+    if (hasStarted) return;
+    
+    gate.classList.add('open');
+    app.classList.add('zoomed');
+    
+    mentor.classList.remove('active', 'flying');
+    mentor.style.opacity = ''; 
+    void mentor.offsetWidth; 
+    
+    setTimeout(() => {
+        trigger.classList.add('visible');
+        hasStarted = true;
+        nextDialogue(); 
+        
+        setTimeout(() => {
+            gate.classList.add('hidden');
+        }, 1000);
+    }, 1500);
 }
 
 // Event Listeners
+gate.addEventListener('click', openGate);
+
 trigger.addEventListener('click', (e) => {
     if (e.target.tagName !== 'A') {
         nextDialogue();
@@ -132,10 +203,15 @@ prevBtn.addEventListener('click', (e) => {
     prevDialogue();
 });
 
-restartBtn.addEventListener('click', restartDialogue);
+restartBtn.addEventListener('click', restartAdventure);
 
 // Keyboard Support
 window.addEventListener('keydown', (e) => {
+    if (!hasStarted && (e.code === 'Space' || e.code === 'Enter')) {
+        openGate();
+        return;
+    }
+
     if (isTyping) return;
 
     if (e.code === 'Space' || e.code === 'Enter') {
@@ -147,11 +223,6 @@ window.addEventListener('keydown', (e) => {
         e.preventDefault();
         prevDialogue();
     } else if (e.code === 'KeyR') {
-        restartDialogue();
+        restartAdventure();
     }
 });
-
-// Initial trigger
-window.onload = () => {
-    setTimeout(nextDialogue, 800);
-};
