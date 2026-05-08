@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>《JS 核心重構：勇者轉職傳說》- 前導序幕</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div id="app">
+        <div class="scanlines"></div>
+        
+        <div class="character-container" id="character">
+            <img src="mentor.png" alt="Mentor" class="mentor-img">
+        </div>
+
+        <div class="dialogue-box" id="dialogue-trigger">
+            <div class="speaker-name">傳奇導師 Antigravity</div>
+            
+            <div class="dialogue-text" id="text-target">
+                <!-- Text will be typed here -->
+            </div>
+
+            <!-- Navigation Controls -->
+            <div class="dialogue-controls">
+                <button class="nav-btn" id="prev-btn" title="回上一段 (Backspace)">◀ 回溯</button>
+                <div class="next-indicator"></div>
+            </div>
+        </div>
+
+        <!-- End Controls -->
+        <div class="end-controls" id="end-controls">
+            <button class="action-btn restart-btn" id="restart-btn">🔄 重啟序幕</button>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
