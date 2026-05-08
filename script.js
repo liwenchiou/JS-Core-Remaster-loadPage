@@ -110,8 +110,10 @@ function updateUI() {
 
     if (currentStep >= dialogueData.length && !isTyping) {
         endControls.classList.add('visible');
+        trigger.style.opacity = '1';
     } else {
         endControls.classList.remove('visible');
+        trigger.style.opacity = '1';
     }
 }
 
