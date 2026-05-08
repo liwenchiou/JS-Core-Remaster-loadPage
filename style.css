@@ -28,19 +28,35 @@ body {
     position: relative;
     width: 100%;
     height: 100%;
-    background-image: url('bg.png');
-    background-size: cover;
-    background-position: center;
     display: flex;
     flex-direction: column;
     justify-content: flex-end;
     align-items: center;
-    padding-bottom: 50px;
+    padding-bottom: 120px;
     transition: transform 3s cubic-bezier(0.19, 1, 0.22, 1);
+    overflow: hidden;
+}
+
+.interior-bg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url('bg.png');
+    background-size: cover;
+    background-position: center;
+    filter: brightness(0.6) blur(6px);
+    transition: filter 2.5s cubic-bezier(0.4, 0, 0.2, 1);
+    z-index: 0;
 }
 
 #app.zoomed {
     transform: scale(1.1);
+}
+
+#app.zoomed .interior-bg {
+    filter: brightness(1) blur(0px);
 }
 
 #app::before {
@@ -64,10 +80,17 @@ body {
     height: 100%;
     z-index: 100;
     display: flex;
+    justify-content: center;
     cursor: pointer;
     overflow: hidden;
     perspective: 1500px;
     background: #000;
+    transition: background 2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.gate-overlay.open {
+    background: transparent;
+    pointer-events: none;
 }
 
 .gate-left, .gate-right {
@@ -109,13 +132,13 @@ body {
 }
 
 .gate-overlay.open .gate-flare {
-    animation: flashFade 0.8s forwards;
+    animation: flashFade 1.5s cubic-bezier(0.19, 1, 0.22, 1) forwards;
 }
 
 @keyframes flashFade {
-    0% { opacity: 0; }
-    15% { opacity: 1; }
-    100% { opacity: 0; }
+    0% { opacity: 0; background: #fff; }
+    30% { opacity: 1; background: #fff; filter: brightness(1.5); }
+    100% { opacity: 0; background: rgba(255, 212, 59, 0.2); }
 }
 
 .gate-content {
@@ -162,7 +185,7 @@ body {
 /* Character Container */
 .character-container {
     position: absolute;
-    bottom: 180px;
+    bottom: 250px;
     left: 50%;
     transform: translateX(-50%);
     width: 700px;
