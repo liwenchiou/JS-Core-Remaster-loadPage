@@ -110,12 +110,10 @@ function updateUI() {
 
     if (currentStep >= dialogueData.length && !isTyping) {
         endControls.classList.add('visible');
-        trigger.style.pointerEvents = 'none';
-        trigger.style.opacity = '0.5';
+        trigger.classList.add('finished');
     } else {
         endControls.classList.remove('visible');
-        trigger.style.pointerEvents = 'auto';
-        trigger.style.opacity = '1';
+        trigger.classList.remove('finished');
     }
 }
 
@@ -211,10 +209,17 @@ function openGate() {
 // Event Listeners
 gate.addEventListener('click', openGate);
 
-trigger.addEventListener('click', (e) => {
-    if (e.target.tagName !== 'A') {
-        nextDialogue();
-    }
+document.addEventListener('click', (e) => {
+    // Only continue if the prologue has started and we're not typing
+    if (!hasStarted || isTyping) return;
+    
+    // Don't trigger if clicking a link, a button, or the dialogue control area
+    if (e.target.tagName === 'A' || e.target.closest('button')) return;
+    
+    // Don't trigger if the dialogue is already finished (showing restart btn)
+    if (currentStep >= dialogueData.length) return;
+
+    nextDialogue();
 });
 
 prevBtn.addEventListener('click', (e) => {
