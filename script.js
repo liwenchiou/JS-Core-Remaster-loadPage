@@ -10,7 +10,7 @@ const dialogueData = [
     },
     {
         speaker: "傳奇導師 Antigravity",
-        text: "年輕的冒險者，歡迎來到<b>『JS 核心重構公會』</b>。我是導師 Antigravity。",
+        text: "年輕的冒險者，歡迎來到<b>『傳奇冒險者公會』</b>。我是導師 Antigravity。",
         action: () => {
             triggerMentorEntry();
         }
