@@ -110,10 +110,8 @@ function updateUI() {
 
     if (currentStep >= dialogueData.length && !isTyping) {
         endControls.classList.add('visible');
-        trigger.classList.add('finished');
     } else {
         endControls.classList.remove('visible');
-        trigger.classList.remove('finished');
     }
 }
 
